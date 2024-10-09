@@ -1,5 +1,11 @@
-// Assuming your game variable is named `myScratchGame`
-const game = Find The Cones; // Replace with your actual game reference
+// Load the project file (assuming it's JSON format)
+fetch("assets/project")
+    .then(response => response.json())
+    .then(data => {
+        const conesList = data.lists.Cones; // Access the Cones list from the loaded data
+        console.log("Loaded Cones list:", conesList);
+    })
+    .catch(error => console.error("Error loading project file:", error));
 
 // Function to save the "Cones" list to local storage
 function saveConesList() {
@@ -20,12 +26,5 @@ function loadConesList() {
     }
 }
 
-// Example of initializing the game
-function initializeGame() {
-    loadConesList(); // Load the cones list at the start of the game
-
-    // Other initialization code...
-}
-
-// Call initializeGame when your game starts
-initializeGame();
+// Call loadConesList when the game starts
+loadConesList();
