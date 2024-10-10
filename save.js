@@ -1,24 +1,27 @@
-function serializeGame() {
-    const gameState = {
-        html: document.getElementById('gameContainer').outerHTML,
-        // You can add more properties if necessary
-    };
-    return JSON.stringify(gameState);
-}
+function saveGameHTML() {
+    const gameContainer = document.getElementById('gameContainer'); // Adjust to your game's main container ID
+    const gameHTML = gameContainer.outerHTML; // Get the entire HTML structure
 
-function saveGame() {
-    const gameState = serializeGame();
-    localStorage.setItem('gameState', gameState);
-    console.log("Game state saved!");
+    localStorage.setItem('savedGameHTML', gameHTML);
+    console.log("Game HTML saved!");
 }
-
-function loadGame() {
-    const savedState = localStorage.getItem('gameState');
-    if (savedState) {
-        const gameState = JSON.parse(savedState);
-        document.getElementById('gameContainer').outerHTML = gameState.html; // Restore the HTML structure
-        console.log("Game state loaded!");
+function loadGameHTML() {
+    const savedHTML = localStorage.getItem('savedGameHTML');
+    if (savedHTML) {
+        const gameContainer = document.getElementById('gameContainer'); // Adjust to your game's main container ID
+        gameContainer.outerHTML = savedHTML; // Restore the saved HTML structure
+        console.log("Game HTML loaded!");
     } else {
-        console.log("No saved game state found.");
+        console.log("No saved game HTML found.");
     }
 }
+// Example: Save when the window is about to unload
+window.onbeforeunload = function() {
+    saveGameHTML();
+};
+
+// Or call save when a specific action occurs in your game
+// document.getElementById('someButton').onclick = saveGameHTML;
+window.onload = function() {
+    loadGameHTML();
+};
